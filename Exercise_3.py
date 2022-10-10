@@ -20,42 +20,52 @@
 # out
 # [4, 4, 5, 5, 6, 2, 3, 0, 9, 4]
 # [6, 2, 3, 0, 9]
-
-# set нельзя использовать
 from random import randint
-from itertools import groupby
-
+import sys
 def check_number():
     try:
-        number = int(input('Enter your number: '))
+        number = int(input('Enter your number: ')) 
+        print(f'Your number is {number}')  
         if number < 0:
-            print('Negative value of the number of numbers!\n[]')
-            return check_number()
+            sys.exit('Negative value of the number of numbers!')
+        return number
     except ValueError:
         print('Try again.')
-        check_number()
-    return number
+        return check_number()
 
+        
 def first_list(number):
     my_list = []
     for i in range(number):
         my_list.append(randint(0, number))
-    print(my_list)
+    print(f'My_list: \n{my_list}')
     return my_list
 
 def new_list(my_list, number):
     uniqui_numbers = []
+    result = []
+    dublicate = []
     for number in my_list:
         if number in uniqui_numbers:
+            dublicate.append(number) # добавляем в список dublicate повторяющиеся больше одного раза элементы(удаляя при этом дубликаты) + элементы не повторяющиеся
             continue
         else:
             uniqui_numbers.append(number)
     
+    for i in uniqui_numbers: # перечисляем все объекты в списке uniq
+        if i in dublicate:   # если число со списка uniq... есть в списке dublicate, то ничего не делаем...
+            continue
+        else:
+            result.append(i) # если его нет, то добавляем в result
+    print("Uniqui_numbers: ")
     print(uniqui_numbers)
+    print("Dublicate: ")
+    print(dublicate)
+    print("Result: ")
+    print(result)
         
+
 def Main():
     digit = check_number()
-    print(f'Your number: {digit}\n')
     new_list(first_list(digit), digit)
-
 Main()
